@@ -1,0 +1,191 @@
+/* Genel Stil Ayarları */
+body {
+    font-family: 'Playfair Display', serif; /* Elit bir görünüm için */
+    background-color: #f4f6f7; /* Önerilen zemin rengi */
+    color: #233b61; /* Ana lacivert tonu */
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar: Masaüstünde yan yana, mobilde esnek yapı */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #233b61;
+    padding: 1rem 5%;
+    color: white;
+}
+
+nav ul {
+    display: flex; /* Linklerin yan yana dizilmesi için */
+    list-style: none;
+    gap: 20px;
+}
+
+/* Hero Bölümü: Flexbox ile düzenlendi */
+.hero {
+    display: flex;
+    align-items: center;
+    min-height: 80vh;
+    padding: 0 5%;
+    gap: 40px;
+}
+
+.hero-text { flex: 1; }
+.hero-image { flex: 1; text-align: right; }
+.hero-image img { width: 100%; border-radius: 10px; border: 3px solid #f39c12; }
+
+/* Hizmetler Grid Sistemi */
+.services-grid {
+    display: grid;
+    /* Masaüstünde 3 sütunlu yapı */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+    padding: 50px 5%;
+}
+
+.service-card {
+    background: white;
+    padding: 20px;
+    border-top: 5px solid #f39c12; /* Vurgu rengi */
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* RESPONSIVE AYARLAR (Media Queries) */
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr); /* Tablet: 2 sütun */
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column-reverse; /* Mobil: Resim üstte yazı altta */
+        text-align: center;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr; /* Mobil: Tek sütun */
+    }
+
+    nav ul {
+        display: none; /* Basitlik için mobilde gizlendi */
+    }
+}
+
+/* --- GHOST PROTOCOL (TASK 2.2) TASARIMI --- */
+
+.pricing-wrapper {
+    display: flex; /* Kartların yan yana dizilmesi için kullanıldı */
+    justify-content: center; /* Kartları yatayda ortalar */
+    gap: 30px; /* Kartlar arasındaki boşluğu belirler */
+    padding: 20px;
+    flex-wrap: wrap; /* Mobilde kutuların alt satıra düşmesi için */
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Kart içeriğini dikeyde hizalar */
+}
+
+.card.popular {
+    border: 2px solid #f39c12; /* Vurgu rengi */
+    transform: scale(1.05); /* Öne çıkan kartı hafif büyütür */
+}
+
+.badge {
+    position: absolute;
+    top: -15px;
+    right: 20px;
+    background: #f39c12; /* Turuncu vurgu */
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.price-box {
+    margin: 20px 0;
+    color: #233b61; /* Ana kurumsal renk */
+}
+
+.amount {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.card-body ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.card-body li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.disabled {
+    color: #ccc;
+    text-decoration: line-through; /* Pasif özellikleri üstü çizili gösterir */
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #233b61;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #f39c12; /* Vurgu butonu */
+}
+
+/* Mobilde Fiyatlandırma Kartlarının Hizalanması */
+@media (max-width: 768px) {
+    .pricing-wrapper {
+        flex-direction: column; 
+        align-items: center;
+    }
+}
+
+/* Sayfa Altındaki Yönlendirme Butonları (Genel Stil) */
+.back-link, footer {
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 20px;
+}
+
+/* "Ana Sayfaya Dön" ve "Paketleri Gör" Butonlarının Ortak Tasarımı */
+.back-link a, footer a {
+    display: inline-block; /* Buton formuna girmesi için */
+    text-decoration: none; /* Alt çizgiyi kaldırır */
+    background-color: #233b61; /* Ana Renk: Lacivert */
+    color: #f39c12; /* Vurgu: Turuncu */
+    padding: 12px 25px;
+    border: 2px solid #f39c12; /* Vurgu rengi çerçeve */
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease; /* Yumuşak geçiş efekti */
+}
+
+/* Buton Hover (Üzerine Gelince) Efekti */
+.back-link a:hover, footer a:hover {
+    background-color: #f39c12; /* Renkler yer değiştirir */
+    color: #233b61;
+    transform: translateY(-3px); /* Hafif yükselme efekti */
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3); /* Turuncu gölge */
+}
