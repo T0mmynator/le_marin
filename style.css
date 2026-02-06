@@ -7,6 +7,20 @@ body {
     padding: 0;
 }
 
+.page-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #233b61; /* Mevcut lacivert tonun */
+}
+
 /* Navbar: Masaüstünde yan yana, mobilde esnek yapı */
 nav {
     display: flex;
@@ -188,4 +202,79 @@ nav ul {
     color: #233b61;
     transform: translateY(-3px); /* Hafif yükselme efekti */
     box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3); /* Turuncu gölge */
+}
+
+/* --- EKİP SAYFASI VE ANİMASYONLAR (TASK 3.1) --- */
+
+.team-header {
+    text-align: center;
+    padding: 50px 5%;
+    background-color: #f4f6f7;
+}
+
+.team-container {
+    display: flex; /* Kartları yan yana dizmek için */
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    flex-wrap: wrap; /* Mobilde kartların alt alta düşmesi için */
+}
+
+/* Flip Card (Dönme Efekti) Mimarisi */
+.team-card {
+    background-color: transparent;
+    width: 300px;
+    height: 400px;
+    perspective: 1000px; /* 3D derinlik algısı sağlar */
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s ease-in-out; /* Yumuşak dönme efekti */
+    transform-style: preserve-3d; /* Ön ve arka yüzün katmanlı durması için */
+}
+
+.team-card:hover .card-inner {
+    transform: rotateY(180deg); /* Mouse gelince kartı 180 derece döndürür  */
+}
+
+.card-front, .card-back {
+    position: absolute; /* Üst üste binmeleri için */
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Arkası dönerken ön yüzün görünmemesi için */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.card-front {
+    background-color: white;
+    color: #233b61;
+}
+
+.card-front img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.card-back {
+    background-color: #233b61; /* Arka yüz elit lacivert */
+    color: white;
+    transform: rotateY(180deg); /* Arka yüzü başlangıçta ters tutar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.sertifika-img {
+    width: 150px;
+    margin-top: 15px;
+    border: 2px solid #f39c12; /* Onaylı geliştirici vurgusu */
 }
