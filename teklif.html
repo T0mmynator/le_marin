@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q-LINE TASK 4.1: Teklif Hesaplama</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo" style="font-weight: bold;">Q-LINE</div>
+        <ul>
+            <li><a href="index.html" style="color: white; text-decoration: none; font-weight: bold;">Ana Sayfa</a></li>
+            <li><a href="task2.html" style="color: white; text-decoration: none; font-weight: bold;">Koleksiyon</a></li>
+            <li><a href="team.html" style="color: white; text-decoration: none; font-weight: bold;">Ekibimiz</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-container">
+        <header class="page-header">
+            <h1>Hızlı Maliyet Hesaplama</h1>
+            <p>Kendi ihtiyaçlarınıza göre tahmini fiyat alın — sayfa yenilenmeden.</p>
+        </header>
+
+        <section style="padding: 20px 5%; display:flex; justify-content:center;">
+            <div style="background:#fff; padding:24px; border-radius:10px; width:920px; max-width:1000px; box-shadow:0 6px 24px rgba(0,0,0,0.08);">
+                <div style="display:flex; gap:30px; flex-wrap:wrap; align-items:flex-start;">
+                    <div style="flex:1; min-width:280px;">
+                        <label style="font-weight:bold;">Adet (Takım Sayısı)</label>
+                        <input id="count" type="number" min="1" value="1" style="width:100%; padding:10px; margin-top:8px; border-radius:6px; border:1px solid #ddd;">
+
+                        <label style="font-weight:bold; margin-top:16px; display:block;">Kumaş Kalitesi</label>
+                        <select id="quality" style="width:100%; padding:10px; margin-top:8px; border-radius:6px; border:1px solid #ddd;">
+                            <option value="standard">Standard - ₺12.000</option>
+                            <option value="premium">Premium - ₺17.900</option>
+                            <option value="lux">Lüks - ₺65.000</option>
+                        </select>
+
+                        <div style="margin-top:14px;">
+                            <label><input id="alteration" type="checkbox" style="margin-right:8px;"> Ücretsiz Tadilat (İlk yıl)</label>
+                        </div>
+
+                        <div style="margin-top:8px;">
+                            <label><input id="express" type="checkbox" style="margin-right:8px;"> Express Teslimat (+%10)</label>
+                        </div>
+
+                        <div style="margin-top:16px;">
+                            <button id="resetBtn" class="btn" style="background:#eee; color:#233b61;">Sıfırla</button>
+                        </div>
+                    </div>
+
+                    <div style="width:360px; min-width:260px;">
+                        <div style="background:#f8fafb; padding:18px; border-radius:8px; border:1px solid #eee;">
+                            <h3 style="margin-top:0;">Tahmini Tutar</h3>
+                            <div id="result" style="font-size:1.6rem; font-weight:700; color:#233b61; margin-top:12px;">₺0</div>
+                            <div id="breakdown" style="margin-top:12px; color:#445; font-size:0.95rem;"></div>
+                        </div>
+                        <p style="margin-top:12px; color:#666; font-size:0.9rem;">Hesaplama ön bilgilendirmedir. Nihai fiyat görüşme ve ölçü sonrası kesinleşir.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="back-link">
+            <a href="index.html">← Ana Sayfaya Dön</a>
+        </div>
+    </main>
+
+    <script>
+        // Fiyatların merkezi haritası (camelCase)
+        const priceMap = {
+            standard: 12000,
+            premium: 17900,
+            lux: 65000
+        };
+
+        // DOM referanslarını anlamlı camelCase değişkenlerde topla
+        const elements = {
+            quantityInput: document.getElementById('count'),
+            qualitySelect: document.getElementById('quality'),
+            alterationCheckbox: document.getElementById('alteration'),
+            expressCheckbox: document.getElementById('express'),
+            resetButton: document.getElementById('resetBtn'),
+            resultEl: document.getElementById('result'),
+            breakdownEl: document.getElementById('breakdown')
+        };
+
+        // formatTRY: Sayıya Türk Lirası biçimlendirmesi uygular
+        function formatTRY(value) {
+            return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(value);
+        }
+
+        // calculateEstimate: Kullanıcı seçimlerine göre tahmini toplamı hesaplar ve DOM'u günceller
+        function calculateEstimate() {
+            const quantity = Math.max(1, parseInt(elements.quantityInput.value, 10) || 1);
+            const qualityKey = elements.qualitySelect.value;
+            const basePrice = priceMap[qualityKey] || 0;
+
+            const subTotal = basePrice * quantity;
+
+            // alterationFee: Ücretsiz tadilat seçili değilse takım başına ücret uygula
+            const alterationFee = elements.alterationCheckbox.checked ? 0 : 500 * quantity;
+
+            let total = subTotal + alterationFee;
+
+            // Express teslimat +%10
+            if (elements.expressCheckbox.checked) {
+                total = Math.round(total * 1.10);
+            }
+
+            // DOM güncellemeleri
+            elements.resultEl.textContent = formatTRY(Math.round(total));
+
+            // Açıklayıcı madde dökümü
+            const qualityLabel = qualityKey === 'standard' ? 'Standard' : qualityKey === 'premium' ? 'Premium' : 'Lüks';
+            const parts = [];
+            parts.push(`${quantity} x ${qualityLabel}: ${formatTRY(subTotal)}`);
+            parts.push(`Tadilat ücreti: ${formatTRY(alterationFee)}`);
+            if (elements.expressCheckbox.checked) parts.push('Express teslimat: +%10');
+
+            elements.breakdownEl.innerHTML = parts.map(p => `<div>${p}</div>`).join('');
+        }
+
+        // Anlık hesaplama: input ve select değişikliklerinde calculateEstimate tetiklenir
+        ['input', 'change'].forEach(ev => {
+            elements.quantityInput.addEventListener(ev, calculateEstimate);
+            elements.qualitySelect.addEventListener(ev, calculateEstimate);
+            elements.alterationCheckbox.addEventListener(ev, calculateEstimate);
+            elements.expressCheckbox.addEventListener(ev, calculateEstimate);
+        });
+
+        // resetButton: formu varsayılana döndürür ve anında yeniden hesaplar
+        elements.resetButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            elements.quantityInput.value = 1;
+            elements.qualitySelect.value = 'standard';
+            elements.alterationCheckbox.checked = false; // reset does not auto-check free alteration
+            elements.expressCheckbox.checked = false;
+            calculateEstimate();
+        });
+
+        // Sayfa yüklemesinde bir kez hesapla (ilk durum gösterimi için)
+        calculateEstimate();
+    </script>
