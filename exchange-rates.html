@@ -144,6 +144,12 @@
             }
         }
     </style>
+    <script>
+        (function() {
+            var t = localStorage.getItem('theme');
+            if (t === 'dark') document.documentElement.classList.add('dark-mode');
+        })();
+    </script>
 </head>
 <body>
     <nav>

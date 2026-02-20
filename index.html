@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Q-LINE | Elit Takım Elbise</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // Erken tema uygulama: FOUC (theme flash) önleme
+        (function() {
+            var t = localStorage.getItem('theme');
+            if (t === 'dark') document.documentElement.classList.add('dark-mode');
+        })();
+    </script>
 </head>
 <body>
     <nav>
