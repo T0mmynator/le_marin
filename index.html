@@ -8,13 +8,15 @@
 </head>
 <body>
     <nav>
-        <div class="logo" style="font-weight: bold;">Q-LINE</div>
+        <div class="logo">Q-LINE</div>
         <ul>
-            <li><a href="task2.html" style="color: white; text-decoration: none; font-weight: bold;">Koleksiyon</a></li>
-            <li><a href="teklif.html" style="color: white; text-decoration: none; font-weight: bold;">Teklif Al</a></li>
-            <li><a href="team.html" style="color: white; text-decoration: none; font-weight: bold;">Ekibimiz</a></li>
-            <li><a href="#" style="color: white; text-decoration: none; font-weight: bold;">Hakkımızda</a></li>
-            <li><a href="#" style="color: white; text-decoration: none; font-weight: bold;">İletişim</a></li>
+            <li><a href="task2.html">Koleksiyon</a></li>
+            <li><a href="teklif.html">Teklif Al</a></li>
+            <li><a href="team.html">Ekibimiz</a></li>
+            <li><a href="exchange-rates.html">💱 Döviz</a></li>
+            <li><a href="#about">Hakkımızda</a></li>
+            <li><a href="#contact">İletişim</a></li>
+            <li><button id="themeToggle" class="theme-toggle">🌙</button></li>
         </ul>
     </nav>
 
@@ -22,6 +24,7 @@
         <div class="hero-text">
             <h1>Zarafet Detaylarda Gizlidir</h1>
             <p>Sizin için özel olarak tasarlanmış, prestijin simgesi takım elbiseler.</p>
+            <a href="teklif.html" class="hero-cta">Ücretsiz Teklif Alın →</a>
         </div>
         <div class="hero-image">
             <img src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg" alt="Siyahi Model Takım Elbise">
@@ -43,9 +46,89 @@
         </div>
     </section>
 
-    <footer>
-        <p>Q-Line Solutions | Royal Suit Koleksiyonu</p>
-        <a href="task2.html">Koleksiyon Paketlerini Gör</a>
+    <!-- Hakkımızda Bölümü -->
+    <section id="about" class="about-section">
+        <div class="about-text">
+            <h2>Hakkımızda</h2>
+            <p>Q-Line, 2018 yılından bu yana İstanbul'un kalbinde, geleneksel Türk terzilik sanatını modern tasarım anlayışıyla birleştirmektedir. Her dikişte mükemmelliği, her kumaşta kaliteyi hedefliyoruz.</p>
+            <p>Uluslararası kumaş tedarikçilerimiz ve deneyimli terzi ekibimizle, kişiye özel takım elbise deneyimini yeniden tanımlıyoruz.</p>
+        </div>
+        <div class="about-stats">
+            <div class="stat-card">
+                <span class="stat-number">1.200+</span>
+                <span class="stat-label">Mutlu Müşteri</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">8</span>
+                <span class="stat-label">Yıllık Deneyim</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">Usta Terzi</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Kumaş Çeşidi</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- İletişim Bölümü -->
+    <section id="contact" class="contact-section">
+        <h2>İletişim</h2>
+        <p>Randevu almak veya bilgi edinmek için bize ulaşın.</p>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <h4>Adres</h4>
+                <span>Nişantaşı, İstanbul</span>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <h4>Telefon</h4>
+                <span>+90 212 555 00 00</span>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <h4>E-posta</h4>
+                <span>info@qline.com.tr</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <p>© 2026 Q-Line Solutions | Elit Takım Elbise</p>
     </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top-btn" id="scrollTopBtn" title="Yukarı çık">↑</button>
+
+    <script>
+        // Theme toggle: localStorage ile kullanıcı seçimini sakla
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️';
+        }
+        
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark-mode');
+            const isDark = htmlElement.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+        });
+
+        // Scroll to Top butonu: sayfa kaydırıldığında göster
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>

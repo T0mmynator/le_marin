@@ -9,10 +9,11 @@
 <body>
     <nav>
         <div class="logo">Q-LINE</div>
-        <ul>
-            <li><a href="index.html" style="color: white; text-decoration: none; font-weight: bold;">Ana Sayfa</a></li>
-            <li><a href="team.html" style="color: white; text-decoration: none; font-weight: bold;">Ekibimiz</a></li>
-        </ul>
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="task2.html">Koleksiyon</a>
+            <button id="themeToggle" class="theme-toggle">🌙</button>
+        </div>
     </nav>
 
     <div class="team-header">
@@ -73,5 +74,25 @@
     <div class="back-link">
         <a href="index.html">← Ana Sayfaya Dön</a>
     </div>
+
+    <footer class="site-footer">
+        <p>© 2026 Q-Line Solutions | Elit Takım Elbise</p>
+    </footer>
+
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️';
+        }
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark-mode');
+            const isDark = htmlElement.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+        });
+    </script>
 </body>
 </html>

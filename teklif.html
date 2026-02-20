@@ -8,12 +8,13 @@
 </head>
 <body>
     <nav>
-        <div class="logo" style="font-weight: bold;">Q-LINE</div>
-        <ul>
-            <li><a href="index.html" style="color: white; text-decoration: none; font-weight: bold;">Ana Sayfa</a></li>
-            <li><a href="task2.html" style="color: white; text-decoration: none; font-weight: bold;">Koleksiyon</a></li>
-            <li><a href="team.html" style="color: white; text-decoration: none; font-weight: bold;">Ekibimiz</a></li>
-        </ul>
+        <div class="logo">Q-LINE</div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="task2.html">Koleksiyon</a>
+            <a href="team.html">Ekibimiz</a>
+            <button id="themeToggle" class="theme-toggle">🌙</button>
+        </div>
     </nav>
 
     <main class="main-container">
@@ -22,40 +23,40 @@
             <p>Kendi ihtiyaçlarınıza göre tahmini fiyat alın — sayfa yenilenmeden.</p>
         </header>
 
-        <section style="padding: 20px 5%; display:flex; justify-content:center;">
-            <div style="background:#fff; padding:24px; border-radius:10px; width:920px; max-width:1000px; box-shadow:0 6px 24px rgba(0,0,0,0.08);">
-                <div style="display:flex; gap:30px; flex-wrap:wrap; align-items:flex-start;">
-                    <div style="flex:1; min-width:280px;">
-                        <label style="font-weight:bold;">Adet (Takım Sayısı)</label>
-                        <input id="count" type="number" min="1" value="1" style="width:100%; padding:10px; margin-top:8px; border-radius:6px; border:1px solid #ddd;">
+        <section class="quote-section">
+            <div class="quote-container">
+                <div class="quote-body">
+                    <div class="quote-inputs">
+                        <label for="count">Adet (Takım Sayısı)</label>
+                        <input id="count" type="number" min="1" value="1">
 
-                        <label style="font-weight:bold; margin-top:16px; display:block;">Kumaş Kalitesi</label>
-                        <select id="quality" style="width:100%; padding:10px; margin-top:8px; border-radius:6px; border:1px solid #ddd;">
+                        <label for="quality">Kumaş Kalitesi</label>
+                        <select id="quality">
                             <option value="standard">Standard - ₺12.000</option>
                             <option value="premium">Premium - ₺17.900</option>
                             <option value="lux">Lüks - ₺65.000</option>
                         </select>
 
-                        <div style="margin-top:14px;">
-                            <label><input id="alteration" type="checkbox" style="margin-right:8px;"> Ücretsiz Tadilat (İlk yıl)</label>
+                        <div class="quote-checkbox">
+                            <input id="alteration" type="checkbox">
+                            <label for="alteration" style="margin: 0;">Ücretsiz Tadilat (İlk yıl)</label>
                         </div>
 
-                        <div style="margin-top:8px;">
-                            <label><input id="express" type="checkbox" style="margin-right:8px;"> Express Teslimat (+%10)</label>
+                        <div class="quote-checkbox">
+                            <input id="express" type="checkbox">
+                            <label for="express" style="margin: 0;">Express Teslimat (+%10)</label>
                         </div>
 
-                        <div style="margin-top:16px;">
-                            <button id="resetBtn" class="btn" style="background:#eee; color:#233b61;">Sıfırla</button>
-                        </div>
+                        <button id="resetBtn" class="btn" style="margin-top: 20px;">Sıfırla</button>
                     </div>
 
-                    <div style="width:360px; min-width:260px;">
-                        <div style="background:#f8fafb; padding:18px; border-radius:8px; border:1px solid #eee;">
-                            <h3 style="margin-top:0;">Tahmini Tutar</h3>
-                            <div id="result" style="font-size:1.6rem; font-weight:700; color:#233b61; margin-top:12px;">₺0</div>
-                            <div id="breakdown" style="margin-top:12px; color:#445; font-size:0.95rem;"></div>
+                    <div class="quote-result">
+                        <div class="result-card">
+                            <h3>Tahmini Tutar</h3>
+                            <div id="result">₺0</div>
+                            <div id="breakdown"></div>
                         </div>
-                        <p style="margin-top:12px; color:#666; font-size:0.9rem;">Hesaplama ön bilgilendirmedir. Nihai fiyat görüşme ve ölçü sonrası kesinleşir.</p>
+                        <p class="quote-note">Hesaplama ön bilgilendirmedir. Nihai fiyat görüşme ve ölçü sonrası kesinleşir.</p>
                     </div>
                 </div>
             </div>
@@ -65,6 +66,10 @@
             <a href="index.html">← Ana Sayfaya Dön</a>
         </div>
     </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Q-Line | Maliyet Hesaplama Aracı</p>
+    </footer>
 
     <script>
         // Fiyatların merkezi haritası (camelCase)
@@ -134,11 +139,26 @@
             e.preventDefault();
             elements.quantityInput.value = 1;
             elements.qualitySelect.value = 'standard';
-            elements.alterationCheckbox.checked = false; // reset does not auto-check free alteration
+            elements.alterationCheckbox.checked = false;
             elements.expressCheckbox.checked = false;
             calculateEstimate();
         });
 
-        // Sayfa yüklemesinde bir kez hesapla (ilk durum gösterimi için)
+        // Sayfa yüklemesinde bir kez hesapla
         calculateEstimate();
+
+        // Theme toggle: localStorage ile kullanıcı seçimini sakla
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️';
+        }
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark-mode');
+            const isDark = htmlElement.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+        });
     </script>
